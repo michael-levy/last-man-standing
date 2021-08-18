@@ -33,14 +33,17 @@ function ShoppingList(props) {
               <ListGroupItem>
                 <Row>
                   <Col>
-                    <Button
-                      className="remove-btn"
-                      color="danger"
-                      size="sm"
-                      onClick={() => onDeleteClick(_id)}
-                    >
-                      &times;
-                    </Button>
+                    {props.username === "michAEL" && (
+                      <Button
+                        className="remove-btn"
+                        color="danger"
+                        size="sm"
+                        onClick={() => onDeleteClick(_id)}
+                      >
+                        &times;
+                      </Button>
+                    )}
+
                     {name}
                   </Col>
                   <Col style={{ fontStyle: "italic", color: "grey" }}>
