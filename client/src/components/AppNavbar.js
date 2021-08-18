@@ -19,19 +19,10 @@ export default function AppNavbar() {
     <div>
       <Navbar color="dark" dark expand="sm" className="mb-5">
         <Container>
-          <NavbarBrand href="/">ShoppingList</NavbarBrand>
+          <NavbarBrand href="/">Last Man Standing</NavbarBrand>
           <NavbarToggler onClick={toggleNavbar} />
           <Collapse isOpen={!collapsed} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">
-                  GitHub
-                </NavLink>
-              </NavItem>
-            </Nav>
+            <Nav className="ml-auto" navbar></Nav>
           </Collapse>
         </Container>
       </Navbar>

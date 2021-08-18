@@ -1,25 +1,23 @@
 import AppNavbar from "./components/AppNavbar.js";
-import ShoppingList from "./components/ShoppingList";
+import UserList from "./components/UserList";
 import ItemModal from "./components/ItemModal.js";
-
-import { Provider } from "react-redux";
+import { useState } from "react";
 import { Container } from "reactstrap";
-import store from "./store";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  const [item, setItem] = useState();
+
   return (
-    <Provider store={store}>
-      <div className="App">
-        <header className="App-header"></header>
-        <AppNavbar></AppNavbar>
-        <Container>
-          <ItemModal></ItemModal>
-          <ShoppingList></ShoppingList>
-        </Container>
-      </div>
-    </Provider>
+    <div className="App">
+      <header className="App-header"></header>
+      <AppNavbar></AppNavbar>
+      <Container>
+        <ItemModal setItem={setItem}></ItemModal>
+        <UserList item={item}></UserList>
+      </Container>
+    </div>
   );
 }
 

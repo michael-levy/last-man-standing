@@ -9,13 +9,13 @@ import {
   Input,
 } from "reactstrap";
 
-import { connect } from "react-redux";
 import { addItem } from "../actions/itemActions";
 import { useState } from "react";
 
 function ItemModal(props) {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState("");
+  const [team, setTeam] = useState("");
   const toggle = () => {
     setModal(!modal);
   };
@@ -23,25 +23,29 @@ function ItemModal(props) {
   const onChange = (e) => {
     setName(e.target.value);
   };
+  const onChangeTeam = (e) => {
+    setTeam(e.target.value);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const newItem = {
+    const newUser = {
       name: name,
+      teams: team,
     };
-
-    props.addItem(newItem);
+    props.setItem(newUser);
+    addItem(newUser);
     toggle();
   };
 
   return (
     <div>
       <Button color="dark" style={{ marginBottom: "2rem" }} onClick={toggle}>
-        Add Item
+        Add User
       </Button>
 
       <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add To Shopping List</ModalHeader>
+        <ModalHeader toggle={toggle}>Add User</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
@@ -49,12 +53,19 @@ function ItemModal(props) {
               <Input
                 type="text"
                 name="name"
-                id="item"
-                placeholder="Add shopping item"
+                id="name"
+                placeholder="Your name"
                 onChange={onChange}
               />
+              <Input
+                type="text"
+                name="team"
+                id="team"
+                placeholder="Your team"
+                onChange={onChangeTeam}
+              />
               <Button color="dark" style={{ marginTop: "2rem" }} block>
-                Add Item
+                Add User
               </Button>
             </FormGroup>
           </Form>
@@ -64,8 +75,4 @@ function ItemModal(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  item: state.item,
-});
-
-export default connect(mapStateToProps, { addItem })(ItemModal);
+export default ItemModal;

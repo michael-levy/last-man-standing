@@ -2,33 +2,35 @@ const express = require("express");
 const router = express.Router();
 
 // Item model
-const Item = require("../../models/Item");
+const User = require("../../models/User");
 
-// @route   GET api/items
-// @desc    Get all Items
+// @route   GET api/users
+// @desc    Get all users
 // @access  Public
 router.get("/", (req, res) => {
-  Item.find()
-    .sort({ date: -1 })
-    .then((items) => res.json(items));
+  User.find().then((items) => res.json(items));
 });
 
-// @route   POST api/items
-// @desc    Create an item
+// @route   POST api/users
+// @desc    Create a user
 // @access  Public
 router.post("/", (req, res) => {
-  const newItem = new Item({
+  const newUser = new User({
     name: req.body.name,
+    teams: req.body.teams,
   });
 
-  newItem.save().then((item) => res.json(item));
+  newUser
+    .save()
+    .then((user) => res.json(user))
+    .catch((err) => err);
 });
 
-// @route   DELETE api/items/:id
-// @desc    Delete A Item
+// @route   DELETE api/users/:id
+// @desc    Delete A User
 // @access  Public
 router.delete("/:id", (req, res) => {
-  Item.findById(req.params.id)
+  User.findById(req.params.id)
     .then((item) => item.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
 });
