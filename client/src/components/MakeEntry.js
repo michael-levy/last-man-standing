@@ -13,6 +13,13 @@ import {
 import { useState, useEffect } from "react";
 import { getItems, addItem } from "../actions/itemActions";
 
+/**
+ * Modal for making an entry into the database
+ * Asks for a name and team, and will add to db if name is unique
+ *
+ * @param {func} props.setItem send new item to parent
+ * @param {func} props.setUsername set username of current user
+ */
 function ItemModal(props) {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState("");
@@ -20,35 +27,47 @@ function ItemModal(props) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(false);
 
+  /** get all users */
   useEffect(() => {
     getItems(setUsers);
   }, []);
 
+  /**  open/close modal */
   const toggle = () => {
     setModal(!modal);
   };
 
+  /** set name to contents of name field */
   const onChange = (e) => {
     setName(e.target.value);
   };
   const onChangeTeam = (e) => {
     setTeam(e.target.value);
   };
-
+  /** Add new entry */
   const onSubmit = (e) => {
     e.preventDefault();
-    if (users.filter((user) => name === user.name).length > 0) {
+    // check that there is no one already with that name
+    if (
+      users.filter(
+        (user) => name.toLocaleLowerCase() === user.name.toLocaleLowerCase()
+      ).length > 0
+    ) {
       setError(true);
     } else {
+      // create user
       const newUser = {
         name: name,
         teams: team,
       };
+      // add to list of users
       props.setItem(newUser);
-      props.setUsername(name);
+      // add to db
       addItem(newUser);
       toggle();
       setError(false);
+      // set username and move to list page
+      setTimeout(props.setUsername(name), 1000);
     }
   };
 
@@ -56,7 +75,9 @@ function ItemModal(props) {
     <div>
       <p>
         Enter your team for this week. If they don't win, you'll be eliminated!
-        Except not really, because I can't be bothered implementing that.
+        You have to imagine the elimination, because I haven't implemented it.
+        <br></br>
+        Choose wisely - you can't change your mind!
       </p>
       <Button color="dark" style={{ marginBottom: "2rem" }} onClick={toggle}>
         Make an Entry
@@ -87,8 +108,9 @@ function ItemModal(props) {
               {error && (
                 <Alert color="danger" style={{ marginTop: "2rem" }}>
                   <p>
-                    Someone by that name has already entered! (you might need to
-                    yell at Michael to reset the database)
+                    Someone by that name has already entered! (if the gameweek
+                    started recently, you might need to yell at Michael to reset
+                    the database)
                   </p>
                 </Alert>
               )}

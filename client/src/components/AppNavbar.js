@@ -7,9 +7,13 @@ import {
   NavItem,
   NavLink,
   Container,
+  NavbarText,
 } from "reactstrap";
 import { useState } from "react";
 
+/**
+ * Navbar, has home link to reload the page
+ */
 export default function AppNavbar() {
   const [collapsed, setCollapsed] = useState(true);
 
@@ -22,7 +26,12 @@ export default function AppNavbar() {
           <NavbarBrand href="/">Last Man Standing</NavbarBrand>
           <NavbarToggler onClick={toggleNavbar} />
           <Collapse isOpen={!collapsed} navbar>
-            <Nav className="ml-auto" navbar></Nav>
+            <Nav className="m1-auto" navbar>
+              <NavItem>
+                <NavLink href="/">Home</NavLink>
+              </NavItem>
+            </Nav>
+            <NavbarText className="ms-auto">Michael made this thing</NavbarText>
           </Collapse>
         </Container>
       </Navbar>

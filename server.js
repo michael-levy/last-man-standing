@@ -2,14 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const users = require("./routes/api/users");
-
+const dotenv = require("dotenv").config();
 const app = express();
 
 // Express Middleware
 app.use(express.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
+const db = process.env.mongoURI;
 
 // Connect to MongoDB
 mongoose

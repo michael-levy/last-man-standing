@@ -14,6 +14,12 @@ import {
 import { useState, useEffect } from "react";
 import { getItems } from "../actions/itemActions";
 
+/**
+ * Modal to view all other entries in database
+ * User must already be in the db
+ *
+ * @param {func} setUsername set username of current user
+ */
 function ItemModal(props) {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState("");
@@ -34,9 +40,10 @@ function ItemModal(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    props.setUsername("");
     if (
       users.filter(
-        (user) => name.toLocaleLowerCase === user.name.toLocaleLowerCase
+        (user) => name.toLocaleLowerCase() === user.name.toLocaleLowerCase()
       ).length > 0
     ) {
       props.setUsername(name);
@@ -50,8 +57,8 @@ function ItemModal(props) {
   return (
     <div>
       <p>
-        If you've already entered and want to see the other entries, you can
-        login using the name you entered with.
+        If you've already entered this gameweek and want to see the other
+        entries, you can login using the name you entered with.
       </p>
       <Button color="dark" style={{ marginBottom: "2rem" }} onClick={toggle}>
         View Entries
@@ -62,7 +69,7 @@ function ItemModal(props) {
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for="name">The name you previously entered</Label>
+              <Label for="name">Login</Label>
               <Input
                 style={{ marginTop: "2rem" }}
                 type="text"

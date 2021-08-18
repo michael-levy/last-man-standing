@@ -10,19 +10,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [item, setItem] = useState();
   const [username, setUsername] = useState("");
+
   return (
     <div className="App">
       <AppNavbar></AppNavbar>
-      <Container>
-        {username !== "" ? (
+      <Container style={{ maxWidth: "600px" }}>
+        {username.length > 0 ? (
           <UserList item={item} username={username}></UserList>
         ) : (
           <Container>
             <MakeEntry setItem={setItem} setUsername={setUsername}></MakeEntry>
-            <ViewEntries
-              setItem={setItem}
-              setUsername={setUsername}
-            ></ViewEntries>
+            <ViewEntries setUsername={setUsername}></ViewEntries>
           </Container>
         )}
       </Container>
